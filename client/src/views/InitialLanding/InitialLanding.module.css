@@ -1,0 +1,211 @@
+.landingPageContainer {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+
+
+}
+
+.containerWorld {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+
+/* START INFO LANDING */
+.containerInfo {
+    max-width: 50%;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+
+}
+
+.title {
+    margin-top: 1.5em;
+    font-size: 4rem;
+    color: white;
+}
+
+.subTitle {
+    font-size: 2rem;
+    color: white;
+    margin-top: 5px;
+}
+
+.text {
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: white;
+}
+
+.buttonLink {
+    width: 5em;
+    padding: 10px 10px;
+
+    text-decoration: none;
+    background-color: #FFB33C;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    border-radius: 3px;
+
+    color: white;
+    font-size: 1.8rem;
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+.buttonLink:hover {
+    background-color: #e2a036;
+}
+/* END INFO LANDING */
+
+/* START ANIMATION WORLD AND PLANE */
+.containerAnimation {
+    width: 300px;
+    height: 300px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.avion {
+    width: 120px;
+    height: 70px;
+
+    animation-name: girarAlMundo;
+    animation-duration: 10s;
+    position: relative;
+    z-index: 50;
+
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+
+}
+
+@keyframes girarAlMundo {
+    0% {
+        left: -150px;
+        top: 0;
+        transform: rotate(-80deg);
+    }
+
+    12% {
+        left: -100px;
+        top: -100px;
+        transform: rotate(-35deg);
+    }
+
+    25% {
+        top: -150px;
+        transform: rotate(10deg);
+    }
+
+    37% {
+        left: 100px;
+        top: -100px;
+        transform: rotate(55deg);
+    }
+
+    50% {
+        left: 150px;
+        transform: rotate(100deg);
+    }
+
+    62% {
+        left: 100px;
+        top: 100px;
+        transform: rotate(145deg);
+    }
+
+    75% {
+        top: 150px;
+        transform: rotate(190deg);
+    }
+
+    87% {
+        left: -100px;
+        top: 100px;
+        transform: rotate(235deg);
+    }
+
+    100% {
+        left: -150px;
+        top: 0;
+        transform: rotate(280deg);
+    }
+}
+
+.world {
+    width: 250px;
+    height: 250px;
+
+    position: absolute;
+    z-index: 25;
+}
+/* END ANIMATION WORLD AND PLANE */
+
+
+/* START SLIDER */
+
+.slider {
+    width: 100%;
+    height: 100%;
+
+    position: absolute;
+    overflow: hidden;
+}
+
+.slider ul {
+    display: flex;
+    padding: 0;
+    margin: 0;
+    width: 400%;
+    height: 100%;
+
+    animation: sliderImages 20s infinite alternate;
+    animation-timing-function: ease-in;
+    background-color: black;
+}
+
+.slider li {
+    width: 100%;
+    list-style: none;
+}
+
+.slider img {
+    width: 100%;
+    height: 100%;
+    opacity: 0.7;
+
+}
+
+@keyframes sliderImages {
+    0% {margin-left: 0;}
+    20% {margin-left: 0;}
+
+    25% {margin-left: -100%;}
+    45% {margin-left: -100%;}
+
+    50% {margin-left: -200%;}
+    70% {margin-left: -200%;}
+
+    75% {margin-left: -300%;}
+    100% {margin-left: -300%;}
+}
+
+/* END SLIDER */
