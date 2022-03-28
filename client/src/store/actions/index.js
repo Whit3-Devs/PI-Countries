@@ -1,38 +1,96 @@
 import axios from 'axios';
-import { SET_COUNTRIES, SET_APP_LOADING } from './actionTypes';
+import { GET_COUNTRIES_API, GET_COUNTRIES_SEARCH, SET_LOADING, SORT_COUNTRIES_POPULATION, SORT_COUNTRIES_ALPHABET, FILTER_COUNTRIES_CONTINENT, FILTER_COUNTRIES_ACTIVITIES, GET_ACTIVITIES_API } from './actionTypes';
 
 
-// Esta funcion, es para tener la forma del dispatch, que va a ser interna de los actions
-function setCountries(payload) {
+
+export function getCountriesFromAPI() {
+    return function(dispatch) {
+        dispatch(setLoading(true));
+        axios.get("http://localhost:3001/api/countries")
+        .then((countries) => {
+            dispatch(setCountries(countries.data))
+            dispatch(setLoading(false));
+        })
+        .catch((error) => {
+            console.log(error)
+        })
+    }
+}
+
+export function searchCountries(search) {
+    return function(dispatch) {
+        dispatch(setLoading(true));
+        axios.get("http://localhost:3001/api/countries?name=" + search)
+        .then((characters) => {
+            dispatch({
+                type: GET_COUNTRIES_SEARCH,
+                payload: characters
+            })
+            dispatch(setLoading(false));
+        })
+        .catch((error) => {
+            console.log(error)
+        })
+    }
+}
+
+function setCountries(payload){
     return {
-        type: SET_COUNTRIES,
+        type: GET_COUNTRIES_API,
+        payload
+    }
+}
+
+function setLoading(payload) {
+    return {
+        type: SET_LOADING,
         payload: payload
     }
 }
 
-export const getCountriesFromAPI = () => (dispatch) => {
-    dispatch(setAppLoading(true))
-    return axios.get('https://restcountries.com/v3/all').then(response => {
-        const [data] = response;
-        console.log(data)
-        dispatch(setCountries(data));
-        dispatch(setAppLoading(false))
-    });
-};
-
-
-export function clearCharacters() {
-    return (dispatch) => {
-        dispatch(setCountries([]))
+export function sortPopulation(typeOrder) {
+    return {
+        type: SORT_COUNTRIES_POPULATION,
+        payload: typeOrder
     }
 }
 
-
-// APP LOADING
-
-function setAppLoading(payload) {
+export function sortAlphabet(typeOrder) {
     return {
-        type: SET_APP_LOADING,
-        payload: payload
+        type: SORT_COUNTRIES_ALPHABET,
+        payload: typeOrder
+    }
+}
+
+export function filterContinent(typeFilter) {
+    return {
+        type: FILTER_COUNTRIES_CONTINENT,
+        payload: typeFilter
+    }
+}
+
+export function filterActivities(typeFilter) {
+    return {
+        type: FILTER_COUNTRIES_ACTIVITIES,
+        payload: typeFilter
+    }
+}
+
+export function getActivitiesFromAPI() {
+    return function(dispatch) {
+        axios.get("http://localhost:3001/api/activities")
+        .then((activities) => {
+            dispatch(setActivities(activities.data))
+        })
+        .catch((error) => {
+            console.log(error)
+        })
+    }
+}
+
+function setActivities(payload){
+    return {
+        type: GET_ACTIVITIES_API,
+        payload
     }
 }

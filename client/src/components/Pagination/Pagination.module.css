@@ -1,0 +1,32 @@
+.containerButtonsPagination {
+    box-sizing: border-box;
+    margin-top:  3rem;
+    width: 100%;
+
+    padding: 20px 15%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.containerButtons {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.containerButtons button {
+
+    width: 2rem;
+    height: 2rem;
+
+    background-color: #5ACAA7;
+    border: 1px solid #5ACAA7;
+}
+
+.containerButtons button:hover {
+
+
+    background-color: #48a588;
+}

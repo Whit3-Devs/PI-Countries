@@ -1,39 +1,38 @@
 const { Model, DataTypes } = require('sequelize');
-class Country extends Model {};
+class Activities extends Model {};
 
 
 // Exportamos una funcion que define el modelo
 // Luego le injectamos la conexion a sequelize.
 module.exports = (sequelize) => {
-  return Country.init(
+  return Activities.init(
     {
       id: {
-        type: DataTypes.STRING,
+        type: DataTypes.UUID,
         allowNull: false,
         primaryKey: true,
+        defaultValue: DataTypes.UUIDV4,
       },
       name: {
         type: DataTypes.STRING,
+        allowNull: false,
       },
-      image: {
-        type: DataTypes.STRING,
+      difficulty: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
       },
-      continent: {
+      duration: {
         type: DataTypes.STRING,
+        allowNull: false,
       },
-      subRegion: {
+      season: {
         type: DataTypes.STRING,
-      },
-      area: {
-        type: DataTypes.STRING,
-      },
-      population: {
-        type: DataTypes.STRING,
+        allowNull: false,
       },
     },
     {
       sequelize,
-      tableName: "country",
+      tableName: "activities",
     }
   );
 };

@@ -31,14 +31,12 @@ const InitialLanding = () => {
         <div className={styles.containerWorld}>
           <div className={styles.containerInfo}>
             <h1 className={styles.title} >Countries App</h1>
-            <h2 className={styles.subTitle}>Tu lugar y actividad ideal</h2>
+            <h2 className={styles.subTitle}>Your ideal place and activity</h2>
             <p className={styles.text}>
-              Encontrá las mejores locaciones para que puedas planificar y
-              armar tu hoja de ruta. Aprovechando al máximo las increibles
-              experiencias que te puede otrogar cada sitio.
+            Find the best locations so you can plan and build your roadmap. Making the most of the incredible experiences that each site can give you.
             </p>
 
-            <Link to="/countries" className={styles.buttonLink}>Ver más</Link>
+            <Link to="/countries" className={styles.buttonLink}>See more</Link>
           </div>
           <div className={styles.containerAnimation}>
             <img src={avion} alt="Imagen de avion" className={styles.avion} />

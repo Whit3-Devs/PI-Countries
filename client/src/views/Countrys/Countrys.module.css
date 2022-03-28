@@ -12,13 +12,63 @@
 }
 
 .imageBackgroundWorld {
-
-
     margin-top: -30px;
 
     width: 100%;
     height: 100%;
-
+    opacity: 0.5;
     position: fixed;
     z-index: -20;
+}
+
+.containerLoading {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    margin-top: 40px;
+}
+
+.containerLoading h2 {
+    color: #222;
+}
+
+.loadingWorld {
+    width: 200px;
+    height: 200px;
+
+    animation-name: rotateWorld;
+    animation-duration: 7s;
+
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+}
+
+
+@keyframes rotateWorld {
+
+    0% {
+        transform: rotate(0deg);
+    }
+
+    25% {
+        transform: rotate(90deg);
+    }
+
+    50% {
+        transform: rotate(180deg);
+    }
+
+    75% {
+        transform: rotate(270deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+
 }
