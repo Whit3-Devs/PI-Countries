@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { GET_COUNTRIES_API, GET_COUNTRIES_SEARCH, SET_LOADING, SORT_COUNTRIES_POPULATION, SORT_COUNTRIES_ALPHABET, FILTER_COUNTRIES_CONTINENT, FILTER_COUNTRIES_ACTIVITIES, GET_ACTIVITIES_API } from './actionTypes';
+import { GET_COUNTRIES_API, GET_COUNTRIES_SEARCH, SET_LOADING, SORT_COUNTRIES_POPULATION, SORT_COUNTRIES_ALPHABET, FILTER_COUNTRIES_CONTINENT, FILTER_COUNTRIES_ACTIVITIES, GET_ACTIVITIES_API, SET_COUNTRIES_PAGINATION } from './actionTypes';
 
 
 
@@ -21,10 +21,10 @@ export function searchCountries(search) {
     return function(dispatch) {
         dispatch(setLoading(true));
         axios.get("http://localhost:3001/api/countries?name=" + search)
-        .then((characters) => {
+        .then((countries) => {
             dispatch({
                 type: GET_COUNTRIES_SEARCH,
-                payload: characters
+                payload: countries.data
             })
             dispatch(setLoading(false));
         })
@@ -92,5 +92,12 @@ function setActivities(payload){
     return {
         type: GET_ACTIVITIES_API,
         payload
+    }
+}
+
+export function setCountriesPagination(numPag) {
+    return {
+        type: SET_COUNTRIES_PAGINATION,
+        payload: numPag
     }
 }

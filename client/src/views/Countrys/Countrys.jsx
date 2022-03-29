@@ -2,31 +2,37 @@ import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getCountriesFromAPI } from "../../store/actions";
 import CountriesMap from "../../components/CountriesMap/CountriesMap";
-// import Country from "../../components/Country/Country.jsx";
 import styles from "./Countrys.module.css";
 import imageWorldMap from "../../assets/images/worldmap.png";
 import world from "../../assets/images/world.png";
 import Pagination from "../../components/Pagination/Pagination";
-import reOrderArrayPagination from "../../helpers/functions/reOrderArrayPagination";
+
 
 
 
 const Countrys = () => {
 
-  let {filteredCountries} = useSelector((state) => state.countries);
+  let { paginationCountries } = useSelector((state) => state.countries)
+  let { pagination } = useSelector((state) => state.countries)
   let {loading} = useSelector((state) => state.loading)
+ 
   let dispatch = useDispatch();
-  const [pag, setPages] = useState(0);
+  let [pag, setPages] = useState(null); 
 
-  let countryPagination = useRef()
-  countryPagination.current = reOrderArrayPagination(filteredCountries);
+
+  useEffect(() => {
+    dispatch(getCountriesFromAPI());
+    setPages(0)
+
+  }, []);
+
   function onChangePagination(e) {
     setPages(parseInt(e.target.value));
   }
 
-  useEffect(() => {
-    dispatch(getCountriesFromAPI());
-  }, []);
+  function onResetPagination(num){
+    setPages(num)
+  }
 
   return (
     <>
@@ -35,9 +41,6 @@ const Countrys = () => {
         alt="Imagen del mapa del mundo"
         className={styles.imageBackgroundWorld}
       />
-      <Pagination countries={countryPagination.current} onChangePagination={onChangePagination}/>
-      <section className={styles.containerCountries}>
-
         {loading
         ? (
           <div className={styles.containerLoading}>
@@ -45,11 +48,14 @@ const Countrys = () => {
             <img src={world} alt="Imagen tipo dibujo del mundo" className={styles.loadingWorld} />
           </div>
         ) : (
-          <CountriesMap countries={countryPagination.current} numPag={pag}/>
+          <section className={styles.containerCountries}>
+            <Pagination countries={paginationCountries} onChangePagination={onChangePagination} numPag={pag}/>
+            <CountriesMap countries={paginationCountries} onResetPagination={onResetPagination} numPag={pag}/>
+          </section>
         )
         }
-      </section>
-      <Pagination countries={countryPagination.current} onChangePagination={onChangePagination}/>
+
+
     </>
   );
 };

@@ -8,7 +8,7 @@ const Navbar = () => {
       <Link to='/' className={styles.linkLanding} >Countries App</Link>
       <ul className={styles.menu}>
         <li><Link to="/countries">Home</Link></li>
-        <li><Link to="/countries/create">Crear Actividad</Link></li>
+        <li><Link to="/countries/create">Create Activity</Link></li>
       </ul>
     </nav>
   )

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import style from "./Filters.module.css";
 import { useDispatch, useSelector } from 'react-redux';
-import { searchCountries, sortPopulation, sortAlphabet, filterContinent, filterActivities, getActivitiesFromAPI } from "../../store/actions";
+import { searchCountries, sortPopulation, sortAlphabet, filterContinent, filterActivities, getActivitiesFromAPI, setCountriesPagination } from "../../store/actions";
 import { ASCENDANT, DESCENDANT, A_Z, Z_A } from "../../constants/sort";
 
 
@@ -31,6 +31,7 @@ const Filters = () => {
   function onSearchSubmit(e) {
     e.preventDefault();
     dispatch(searchCountries(inputSearch))
+
   }
 
   function onSelectSortChange(e) {

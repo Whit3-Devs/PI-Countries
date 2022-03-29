@@ -10,9 +10,12 @@ import CreateActivity from "./views/CreateActivity/CreateActivity";
 const App = () => {
   return (
     <>
-    <Route path="/countries" component={Navbar} />
-    <Route exact path="/countries" component={Filters} />
-    <Route exact path="/countries" component={Countrys} />
+
+    <Route exact path="/countries" component={Navbar} />
+    <Route exact path="/countries">
+      <Filters />
+      <Countrys/>
+    </Route>
     <Route exact path="/countries/countrydetail/:id" component={CountryDetail} />
     <Route exact path="/countries/create" component={CreateActivity} />
     <Route exact path="/" component={InitialLanding} />

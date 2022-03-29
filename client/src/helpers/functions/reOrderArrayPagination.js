@@ -7,8 +7,6 @@ export default function reOrderArrayPagination(arrayCountries){
 
     // Si tiene menos de 9 elementos el array, lo inserto directamente
     if(arrayCountries.length <= 9 && arrayCountries.length !== 0){
-      console.log(arrayCountries.length)
-      console.log('mi tamaño es menor a 9')
       filteredPaginationCountries.push(arrayCountries);
     }
     // Si tiene mas elementos, entoces realizamos la logica para que el primer paginado tenga 9 elemn y el restante 10 o menos

@@ -1,9 +1,12 @@
 import { ASCENDANT, A_Z } from "../../constants/sort";
-import { GET_COUNTRIES_API, GET_COUNTRIES_SEARCH, SORT_COUNTRIES_POPULATION, SORT_COUNTRIES_ALPHABET, FILTER_COUNTRIES_CONTINENT, FILTER_COUNTRIES_ACTIVITIES } from "../actions/actionTypes";
+import { GET_COUNTRIES_API, GET_COUNTRIES_SEARCH, SORT_COUNTRIES_POPULATION, SORT_COUNTRIES_ALPHABET, FILTER_COUNTRIES_CONTINENT, FILTER_COUNTRIES_ACTIVITIES, SET_COUNTRIES_PAGINATION } from "../actions/actionTypes";
+import reOrderArrayPagination from "../../helpers/functions/reOrderArrayPagination";
 
 const initialState = {
     countries: [],
-    filteredCountries: []
+    filteredCountries: [],
+    paginationCountries: [],
+    pagination: 0
 }
 
 export default function countries(state = initialState, {type, payload}){
@@ -12,12 +15,14 @@ export default function countries(state = initialState, {type, payload}){
             return {
                 ...state,
                 countries: payload,
-                filteredCountries: payload
+                filteredCountries: payload,
+                paginationCountries: reOrderArrayPagination(payload)
             }
         case GET_COUNTRIES_SEARCH:
             return {
                 ...state,
-                filteredCountries: payload.data
+                filteredCountries: payload,
+                paginationCountries: reOrderArrayPagination(payload)
             }
         case SORT_COUNTRIES_POPULATION:
             let orderedPopulation = [...state.countries]
@@ -34,7 +39,8 @@ export default function countries(state = initialState, {type, payload}){
 
             return {
                 ...state,
-                filteredCountries: orderedPopulation
+                filteredCountries: orderedPopulation,
+                paginationCountries: reOrderArrayPagination(orderedPopulation)
             }
         case SORT_COUNTRIES_ALPHABET:
             let orderedAlphabet = [...state.countries]
@@ -51,7 +57,8 @@ export default function countries(state = initialState, {type, payload}){
 
             return {
                 ...state,
-                filteredCountries: orderedAlphabet
+                filteredCountries: orderedAlphabet,
+                paginationCountries: reOrderArrayPagination(orderedAlphabet)
             }
         case FILTER_COUNTRIES_CONTINENT:
             let filteredContinent = [];
@@ -62,7 +69,8 @@ export default function countries(state = initialState, {type, payload}){
             })
             return {
                 ...state,
-                filteredCountries: filteredContinent
+                filteredCountries: filteredContinent,
+                paginationCountries: reOrderArrayPagination(filteredContinent)
             }
         case FILTER_COUNTRIES_ACTIVITIES:
             let filteredActivities = [];
@@ -75,8 +83,15 @@ export default function countries(state = initialState, {type, payload}){
             })
             return {
                 ...state,
-                filteredCountries: filteredActivities
+                filteredCountries: filteredActivities,
+                paginationCountries: reOrderArrayPagination(filteredActivities)
             }
+        case SET_COUNTRIES_PAGINATION:
+            return {
+                ...state,
+                pagination: payload
+            }
+
         default:
             return state;
     }

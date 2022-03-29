@@ -23,14 +23,14 @@
 
 .containerLoading {
     width: 100%;
-    height: 100%;
+    height: 70%;
 
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 
-    margin-top: 40px;
+
 }
 
 .containerLoading h2 {
@@ -71,4 +71,30 @@
         transform: rotate(360deg);
     }
 
+}
+
+
+.buttonPag {
+    color: #fafafa;
+    background-color: #5ACAA7;
+    font-size: 1.2rem;
+    border: 1px solid #5ACAA7;
+    border-radius: 3px;
+}
+
+.buttonPag:hover {
+    background-color: #48a588;
+}
+
+.active {
+    background-color: #fafafa;
+    color: #5ACAA7;
+    font-size: 1.2rem;
+    border: 1px solid #5ACAA7;
+    border-radius: 3px;
+}
+
+.active:hover {
+    background-color: #eeebeb;
+    color: #48a588;
 }

@@ -33,10 +33,7 @@ const CreateActivity = () => {
         history.push(`/countries/countrydetail/${newActivity.countryID}`)
     })
   }
-
-
-
-  console.log(newActivity)
+  
   return (
     <div className={style.containerCreateActivity}>
       <form className={style.containerForm} onSubmit={onSubmitNewActivity}>
