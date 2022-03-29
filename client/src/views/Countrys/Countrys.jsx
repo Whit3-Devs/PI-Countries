@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getCountriesFromAPI } from "../../store/actions";
 import CountriesMap from "../../components/CountriesMap/CountriesMap";
@@ -18,8 +18,8 @@ const Countrys = () => {
   let dispatch = useDispatch();
   const [pag, setPages] = useState(0);
 
-  let countryPagination =  reOrderArrayPagination(filteredCountries);
-
+  let countryPagination = useRef()
+  countryPagination.current = reOrderArrayPagination(filteredCountries);
   function onChangePagination(e) {
     setPages(parseInt(e.target.value));
   }
@@ -35,7 +35,7 @@ const Countrys = () => {
         alt="Imagen del mapa del mundo"
         className={styles.imageBackgroundWorld}
       />
-      <Pagination countries={countryPagination} onChangePagination={onChangePagination}/>
+      <Pagination countries={countryPagination.current} onChangePagination={onChangePagination}/>
       <section className={styles.containerCountries}>
 
         {loading
@@ -45,10 +45,11 @@ const Countrys = () => {
             <img src={world} alt="Imagen tipo dibujo del mundo" className={styles.loadingWorld} />
           </div>
         ) : (
-          <CountriesMap countries={countryPagination} numPag={pag}/>
+          <CountriesMap countries={countryPagination.current} numPag={pag}/>
         )
         }
       </section>
+      <Pagination countries={countryPagination.current} onChangePagination={onChangePagination}/>
     </>
   );
 };
