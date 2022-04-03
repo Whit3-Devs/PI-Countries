@@ -1,13 +1,9 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { useSelector } from 'react-redux';
+import React, { useEffect } from 'react';
 import Country from '../Country/Country';
 
 const CountriesMap = ({countries, onResetPagination, numPag}) => {
-    const {loading} = useSelector((state) => state.loading)
     
     useEffect(() => {
-        
-
         return () => onResetPagination(0);
     }, [countries])
     

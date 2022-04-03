@@ -1,12 +1,11 @@
 import { ASCENDANT, A_Z } from "../../constants/sort";
-import { GET_COUNTRIES_API, GET_COUNTRIES_SEARCH, SORT_COUNTRIES_POPULATION, SORT_COUNTRIES_ALPHABET, FILTER_COUNTRIES_CONTINENT, FILTER_COUNTRIES_ACTIVITIES, SET_COUNTRIES_PAGINATION } from "../actions/actionTypes";
+import { GET_COUNTRIES_API, GET_COUNTRIES_SEARCH, SORT_COUNTRIES_POPULATION, SORT_COUNTRIES_ALPHABET, FILTER_COUNTRIES_CONTINENT, FILTER_COUNTRIES_ACTIVITIES, SORT_COUNTRIES_AREA } from "../actions/actionTypes";
 import reOrderArrayPagination from "../../helpers/functions/reOrderArrayPagination";
 
 const initialState = {
     countries: [],
     filteredCountries: [],
     paginationCountries: [],
-    pagination: 0
 }
 
 export default function countries(state = initialState, {type, payload}){
@@ -64,7 +63,7 @@ export default function countries(state = initialState, {type, payload}){
             let filteredContinent = [];
             state.countries.map((country) => {
                 if(country.continent === payload) {
-                    filteredContinent.push(country)
+                    return filteredContinent.push(country)
                 }
             })
             return {
@@ -77,7 +76,7 @@ export default function countries(state = initialState, {type, payload}){
             state.countries.map((country) => {
                 country.Activities.map((acitvity) => {
                     if(acitvity.name === payload) {
-                        filteredActivities.push(country);
+                        return filteredActivities.push(country);
                     }
                 })
             })
@@ -86,12 +85,23 @@ export default function countries(state = initialState, {type, payload}){
                 filteredCountries: filteredActivities,
                 paginationCountries: reOrderArrayPagination(filteredActivities)
             }
-        case SET_COUNTRIES_PAGINATION:
+        case SORT_COUNTRIES_AREA:
+            let ordenedArea = [...state.countries]
+
+            ordenedArea = ordenedArea.sort((a, b) => {
+                if(a.area < b.area) {
+                    return 1;
+                }
+                if(a.area > b.area) {
+                    return -1;
+                }
+                return 0;
+            })
             return {
                 ...state,
-                pagination: payload
+                filteredCountries: ordenedArea,
+                paginationCountries: reOrderArrayPagination(ordenedArea)
             }
-
         default:
             return state;
     }

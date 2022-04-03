@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getCountriesFromAPI } from "../../store/actions";
 import CountriesMap from "../../components/CountriesMap/CountriesMap";
@@ -13,7 +13,6 @@ import Pagination from "../../components/Pagination/Pagination";
 const Countrys = () => {
 
   let { paginationCountries } = useSelector((state) => state.countries)
-  let { pagination } = useSelector((state) => state.countries)
   let {loading} = useSelector((state) => state.loading)
  
   let dispatch = useDispatch();
@@ -23,7 +22,6 @@ const Countrys = () => {
   useEffect(() => {
     dispatch(getCountriesFromAPI());
     setPages(0)
-
   }, []);
 
   function onChangePagination(e) {
@@ -51,6 +49,7 @@ const Countrys = () => {
           <section className={styles.containerCountries}>
             <Pagination countries={paginationCountries} onChangePagination={onChangePagination} numPag={pag}/>
             <CountriesMap countries={paginationCountries} onResetPagination={onResetPagination} numPag={pag}/>
+            <Pagination countries={paginationCountries} onChangePagination={onChangePagination} numPag={pag}/>
           </section>
         )
         }

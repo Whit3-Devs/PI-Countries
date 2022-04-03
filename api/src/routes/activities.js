@@ -18,16 +18,30 @@ routerActivities.get("/", (req, res, next) => {
 
 routerActivities.post("/", async (req, res, next) => {
     try {
+
+      let countryAsync = async (id) => {
+        let countryfind = await Countries.findByPk(id);
+        return countryfind;
+      }
+
       const {  countryID, name, difficulty, duration, season } = req.body;
-      const newActivities = await Activities.create({
+
+      let newActivities = await Activities.create({
         name,
         difficulty,
         duration,
         season,
-      });
-      let country = await Countries.findByPk(countryID);
-      await country.addActivities(newActivities.id);
-      res.status(200).send(newActivities);
+      })
+
+      countryID.map(async (id) => {
+        let countryFinded = await countryAsync(id);
+        if(countryFinded){
+          countryFinded.addActivities(newActivities.id);
+        }
+      })
+
+
+      res.status(200).send({ msg: "Se ha creado correctamente las actividades"});
     } catch (error) {
       next(error);
     }

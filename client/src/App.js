@@ -11,7 +11,7 @@ const App = () => {
   return (
     <>
 
-    <Route exact path="/countries" component={Navbar} />
+    <Route path="/countries" component={Navbar} />
     <Route exact path="/countries">
       <Filters />
       <Countrys/>

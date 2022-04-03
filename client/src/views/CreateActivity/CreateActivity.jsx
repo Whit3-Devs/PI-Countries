@@ -1,14 +1,29 @@
-import React, { useState } from 'react';
-import { useSelector } from 'react-redux'
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux'
 import axios from 'axios';
 import style from './CreateActivity.module.css';
 import { useHistory } from 'react-router-dom';
-
+import { getActivitiesFromAPI, postActivitiesFromAPI, getCountriesFromAPI } from '../../store/actions';
 
 const CreateActivity = () => {
+
+  const dispatch = useDispatch()
+  let { activities } = useSelector((state) => state.activities)
   const history = useHistory()
   let {countries} = useSelector(state => state.countries);
-  const [ newActivity, setNewActivity] = useState({ difficulty: 5});
+  const [ newActivity, setNewActivity] = useState({ 
+    difficulty: 5,
+  countryID: []});
+  const [countriesName, setCountriesName] = useState([])
+
+
+  useEffect(()=>{
+    dispatch(getCountriesFromAPI());
+
+  }, [activities])
+
+  let regExpSoloLettersAndNumbers = /[^a-zA-Z0-9\s]/g;
+  let regExpSoloLetters = /[^a-zA-Z\s]/g;
 
   function onRangeChange(e){ 
     e.preventDefault();
@@ -18,20 +33,56 @@ const CreateActivity = () => {
     })
   }
 
+  let idCountries =  []
+
   function onChangeInputValue(e) {
     e.preventDefault()
-    setNewActivity({
-      ...newActivity,
-      [e.target.name]: e.target.value,
-    })
+
+    if(e.target.name === "countryID") {
+      idCountries.push(e.target.value)
+      setNewActivity({
+        ...newActivity,
+        countryID: [...newActivity.countryID, e.target.value]
+      })
+      console.log(e.target)
+    } else {
+      setNewActivity({
+        ...newActivity,
+        [e.target.name]: e.target.value,
+      })
+    }
+
+
   }
 
   function onSubmitNewActivity(e) {
     e.preventDefault();
-    axios.post('http://localhost:3001/api/activities', newActivity)
-    .then(() => {
-        history.push(`/countries/countrydetail/${newActivity.countryID}`)
+    setNewActivity({
+      ...newActivity,
+      name: newActivity.name.trim(),
+      duration: newActivity.duration.trim()
     })
+
+    let messageGral = newActivity.name.length > 3 && newActivity.name.length > 3 ? "Perfecto" : "Pocos caracteres";
+    let messageName = !regExpSoloLetters.test(newActivity.name) ? "Perfecto" : "Ingresar solo letras";
+    let messageDuration = !regExpSoloLettersAndNumbers.test(newActivity.duration) ? "Perfecto" : "Ingresar solo letras y numeros";
+
+
+
+    if(messageGral === 'Perfecto'){
+      if(messageName === 'Perfecto' && messageDuration === 'Perfecto') {
+        if(newActivity.countryID.length > 0 && newActivity.season){
+          return dispatch(postActivitiesFromAPI(newActivity)), alert("Se creo las actividades en los paises")
+        } else {
+          return alert("No seleccionaste paises o una temporada")
+        }
+
+      } else {
+        return alert(`Input name: ${messageName}. Input duration: ${messageDuration}`)
+      }
+    } else {
+      return alert(messageGral);
+    }
   }
   
   return (
@@ -78,6 +129,22 @@ const CreateActivity = () => {
         </div>
         <input type="submit" value="CREATE ACTIVITY" className={style.buttonCreateActivity}/>
       </form>
+      { newActivity.countryID.length > 0 &&
+      <div className={style.containerCantCountries}>
+        <ul>
+        {
+          (
+            newActivity.countryID.map((countries, index) => {
+              return (
+                <li key={index}>{countries}</li>
+              )
+            })
+          )
+
+          }
+        </ul>
+        </div>
+}
     </div>
   )
 }
